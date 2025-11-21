@@ -12,7 +12,8 @@ const usersSchema = new Schema(
         },
         password: {
             type: String,
-            required: true,
+            required: false, // No requerido para usuarios de Google
+            default: "",
         },
         name: {
             type: String,

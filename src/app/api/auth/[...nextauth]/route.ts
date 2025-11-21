@@ -1,12 +1,17 @@
 // app/api/auth/[...nextauth]/route.ts
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import connect from "@/lib/mongodb";
 import Users from "@/database/models/users";
 import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID || "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+        }),
         CredentialsProvider({
             name: "Credentials",
             credentials: {
@@ -55,11 +60,50 @@ export const authOptions: NextAuthOptions = {
         signIn: "/login",
     },
     callbacks: {
-        async jwt({ token, user }) {
+        async signIn({ user, account, profile }) {
+            // Si es login con Google, crear o actualizar usuario en BD
+            if (account?.provider === "google") {
+                try {
+                    await connect();
+                    const existingUser = await Users.findOne({ email: user.email });
+
+                    if (!existingUser) {
+                        // Crear nuevo usuario con Google
+                        await Users.create({
+                            email: user.email?.toLowerCase(),
+                            name: user.name || "Usuario",
+                            password: "", // Sin contraseña para usuarios de Google
+                            role: "user",
+                        });
+                    }
+                    return true;
+                } catch (error) {
+                    console.error("Error en signIn callback:", error);
+                    return false;
+                }
+            }
+            return true;
+        },
+        async jwt({ token, user, account }) {
             if (user) {
                 token.id = user.id;
                 token.role = user.role;
             }
+
+            // Si es login con Google, obtener datos del usuario desde BD
+            if (account?.provider === "google" && user?.email) {
+                try {
+                    await connect();
+                    const dbUser = await Users.findOne({ email: user.email.toLowerCase() });
+                    if (dbUser) {
+                        token.id = dbUser._id.toString();
+                        token.role = dbUser.role;
+                    }
+                } catch (error) {
+                    console.error("Error obteniendo usuario de BD:", error);
+                }
+            }
+
             return token;
         },
         async session({ session, token }) {

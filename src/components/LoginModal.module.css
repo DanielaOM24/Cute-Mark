@@ -76,3 +76,52 @@
 .link:hover {
     text-decoration: underline;
 }
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200, 200, 210, 0.6);
+}
+
+.googleBtn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(200, 200, 210, 0.6);
+    background: white;
+    color: #2b2b2b;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.googleBtn:hover {
+    background: rgba(253, 232, 238, 0.3);
+    border-color: rgba(236, 72, 153, 0.5);
+}
+
+.googleBtn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}
+
+.googleIcon {
+    width: 20px;
+    height: 20px;
+}

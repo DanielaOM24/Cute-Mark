@@ -2,8 +2,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import ProductCard, { Product } from "./ProductCard";
 import Pagination from "./Pagination";
+import { useAdmin } from "@/hooks/useAdmin";
 import styles from "./ProductGrid.module.css";
 
 type ProductGridProps = {
@@ -13,6 +15,12 @@ type ProductGridProps = {
 
 export default function ProductGrid({ products, itemsPerPage = 8 }: ProductGridProps) {
     const [currentPage, setCurrentPage] = useState(1);
+    const { isAdmin, role, user } = useAdmin();
+
+    // Debug temporal - eliminar después
+    if (typeof window !== "undefined") {
+        console.log("🔍 Debug ProductGrid:", { isAdmin, role, user });
+    }
 
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
@@ -38,10 +46,20 @@ export default function ProductGrid({ products, itemsPerPage = 8 }: ProductGridP
 
     return (
         <div id="products" className={styles.container}>
-            {/* Título de sección */}
-            <h2 className={styles.title}>
-                Nuestros productos
-            </h2>
+            {/* Título de sección con botón de agregar (solo admin) */}
+            <div className={styles.header}>
+                <h2 className={styles.title}>
+                    Nuestros productos
+                </h2>
+                {isAdmin && (
+                    <Link href="/form-img" className={styles.addButton}>
+                        <svg className={styles.addIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Nuevo Producto</span>
+                    </Link>
+                )}
+            </div>
 
             {/* Grid de productos */}
             <div className={styles.grid}>
