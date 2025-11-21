@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import styles from "./ProductCard.module.css";
-import { useToast } from "@/components/ToastProvider";
+import { toast } from "react-toastify";
 import { useCart } from "@/app/context/CartContext";
 
 export type Product = {
@@ -27,14 +27,13 @@ export default function ProductCard({ product }: { product: Product }) {
     const [adding, setAdding] = useState(false);
 
     const { addItem } = useCart();
-    const { showToast } = useToast();
 
     const imageSrc = product.image ?? "/images/placeholder.png";
 
     function validateSelection() {
         // Si en tu negocio la talla es obligatoria, validamos
         if (!selectedSize) {
-            showToast("Por favor selecciona una talla antes de agregar al carrito.", "error");
+            toast.error("Por favor selecciona una talla antes de agregar al carrito.");
             return false;
         }
         return true;
@@ -43,7 +42,7 @@ export default function ProductCard({ product }: { product: Product }) {
     function handleAdd() {
         if (!validateSelection()) return;
         if (!product || !product.productId) {
-            showToast("Producto inválido.", "error");
+            toast.error("Producto inválido.");
             return;
         }
 
@@ -55,15 +54,15 @@ export default function ProductCard({ product }: { product: Product }) {
                 name: product.name ?? "Producto",
                 price: product.price ?? 0,
                 color: selectedColor,
-                size: selectedSize,
+                size: selectedSize ?? undefined,
                 image: product.image,
                 qty: 1,
             });
 
-            showToast("Producto agregado al carrito ✅", "success");
+            toast.success("Producto agregado al carrito ✅");
         } catch (err) {
             console.error("Error agregando al carrito:", err);
-            showToast("No se pudo agregar al carrito.", "error");
+            toast.error("No se pudo agregar al carrito.");
         } finally {
             // pequeño delay visual
             setTimeout(() => setAdding(false), 300);
@@ -79,7 +78,7 @@ export default function ProductCard({ product }: { product: Product }) {
             <div className={styles.body}>
                 <div className={styles.header}>
                     <h3 id={`title-${product._id}`} className={styles.title}>{product.name}</h3>
-                    <span className={styles.price}>${(product.price ?? 0).toFixed(2)}</span>
+                    <span className={styles.price}>${(product.price ?? 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
 
                 <p className={styles.meta}>

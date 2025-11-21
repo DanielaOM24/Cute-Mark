@@ -1,0 +1,109 @@
+/* Header.module.css */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(253, 232, 238, 0.6);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.nav {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+@media (min-width: 640px) {
+    .nav {
+        padding: 0 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nav {
+        padding: 0 32px;
+    }
+}
+
+.logo {
+    font-size: 24px;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    color: #2b2b2b;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.logo:hover {
+    color: #ec4899;
+}
+
+@media (min-width: 768px) {
+    .logo {
+        font-size: 28px;
+    }
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .navRight {
+        gap: 16px;
+    }
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.userLink {
+    display: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.userLink:hover {
+    color: #ec4899;
+}
+
+@media (min-width: 768px) {
+    .userLink {
+        display: block;
+    }
+}
+
+.logoutBtn {
+    padding: 8px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(253, 232, 238, 0.8);
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b5563;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.logoutBtn:hover {
+    background: rgba(253, 232, 238, 0.3);
+}
+
+.logoutBtn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}

@@ -1,0 +1,86 @@
+/* Modal.module.css */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.content {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 448px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    border-bottom: 1px solid rgba(253, 232, 238, 0.6);
+}
+
+.title {
+    font-size: 24px;
+    font-family: Georgia, serif;
+    color: #2b2b2b;
+    margin: 0;
+}
+
+.closeBtn {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn:hover {
+    color: #4b5563;
+    background: rgba(253, 232, 238, 0.3);
+}
+
+.closeBtn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}
+
+.closeIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.body {
+    padding: 24px;
+}

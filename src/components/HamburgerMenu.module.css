@@ -1,0 +1,124 @@
+/* HamburgerMenu.module.css */
+.button {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #4b5563;
+    cursor: pointer;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button:hover {
+    color: #ec4899;
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}
+
+@media (min-width: 768px) {
+    .button {
+        display: none;
+    }
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    z-index: 40;
+}
+
+@media (min-width: 768px) {
+    .overlay {
+        display: none;
+    }
+}
+
+.panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 256px;
+    background: white;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    transform: translateX(0);
+    transition: transform 0.3s;
+}
+
+@media (min-width: 768px) {
+    .panel {
+        display: none;
+    }
+}
+
+.panelContent {
+    padding: 24px;
+}
+
+.panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.panelTitle {
+    font-size: 20px;
+    font-family: Georgia, serif;
+    color: #2b2b2b;
+}
+
+.closeBtn {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.closeBtn:hover {
+    color: #4b5563;
+    background: rgba(253, 232, 238, 0.3);
+}
+
+.closeIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navLink {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 14px;
+    color: #4b5563;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.navLink:hover {
+    background: rgba(253, 232, 238, 0.3);
+    color: #ec4899;
+}

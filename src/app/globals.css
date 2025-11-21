@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
+    --pink-light: #FDE8EE;
+    --pink-gradient: linear-gradient(135deg, #FDE8EE 0%, #FFF7E6 100%);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--pink-light);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Personalización de react-toastify */
+.Toastify__toast {
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(20, 20, 30, 0.1);
+}
+
+.Toastify__toast--success {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #3b2150;
+}
+
+.Toastify__toast--error {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 99, 71, 0.3);
+    color: #3b2150;
+}
+
+.Toastify__toast--info {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #3b2150;
 }

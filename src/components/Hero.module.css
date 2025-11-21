@@ -1,0 +1,139 @@
+/* Hero.module.css */
+.section {
+    position: relative;
+    width: 100%;
+    min-height: 70vh;
+    background-image: url('/hero-boutique.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 64px 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .section {
+        min-height: 80vh;
+        padding: 96px 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .section {
+        min-height: 90vh;
+        padding: 128px 16px;
+    }
+}
+
+/* Overlay sutil para legibilidad del texto */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(253, 232, 238, 0.4) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(243, 232, 255, 0.4) 100%);
+    backdrop-filter: blur(1px);
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding: 0 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 32px;
+    }
+}
+
+.content {
+    text-align: center;
+    position: relative;
+}
+
+.title {
+    font-size: 36px;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 48px;
+        margin-bottom: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .title {
+        font-size: 60px;
+    }
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #4b5563;
+    margin-bottom: 32px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 768px) {
+    .subtitle {
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .subtitle {
+        font-size: 24px;
+    }
+}
+
+.ctaButton {
+    display: inline-block;
+    padding: 16px 32px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #2b2b2b;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(20, 20, 30, 0.15);
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.ctaButton:hover {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 1);
+}
+
+.ctaButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.3);
+}

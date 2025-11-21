@@ -1,0 +1,129 @@
+/* Footer.module.css */
+.footer {
+    background: white;
+    border-top: 1px solid rgba(253, 232, 238, 0.6);
+    margin-top: 64px;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        margin-top: 96px;
+    }
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 16px;
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding: 48px 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 64px 32px;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 48px;
+    }
+}
+
+.columnTitle {
+    font-size: 20px;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin-bottom: 16px;
+}
+
+.columnTitleAlt {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2b2b2b;
+    margin-bottom: 16px;
+}
+
+.text {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.textSmall {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.link {
+    display: block;
+    font-size: 14px;
+    color: #4b5563;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: #ec4899;
+}
+
+.socialContainer {
+    display: flex;
+    gap: 16px;
+}
+
+.socialLink {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(253, 232, 238, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ec4899;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.socialLink:hover {
+    background: rgba(253, 232, 238, 0.8);
+    color: #be185d;
+}
+
+.socialIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.copyright {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(253, 232, 238, 0.6);
+    text-align: center;
+}
+
+.copyrightText {
+    font-size: 14px;
+    color: #4b5563;
+}

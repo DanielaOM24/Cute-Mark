@@ -1,0 +1,45 @@
+/* IconButton.module.css */
+.button {
+    position: relative;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #4b5563;
+    cursor: pointer;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button:hover {
+    color: #ec4899;
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}
+
+.button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: linear-gradient(90deg, rgba(253, 232, 238, 0.95), rgba(243, 232, 255, 0.95));
+    color: #ec4899;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}

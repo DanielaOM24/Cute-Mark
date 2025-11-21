@@ -2,14 +2,29 @@
 "use client";
 
 import React from "react";
+import { SessionProvider } from "next-auth/react";
 import { CartProvider } from "@/app/context/CartContext";
-import { ToastProvider } from "./ToastProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
-    // Aquí añades más providers si los necesitas (ThemeProvider, AuthProvider, etc.)
     return (
-        <CartProvider>
-            <ToastProvider>{children}</ToastProvider>
-        </CartProvider>
+        <SessionProvider>
+            <CartProvider>
+                {children}
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
+            </CartProvider>
+        </SessionProvider>
     );
 }

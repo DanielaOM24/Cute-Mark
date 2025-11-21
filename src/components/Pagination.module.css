@@ -1,0 +1,80 @@
+/* Pagination.module.css */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.button {
+    padding: 8px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(253, 232, 238, 0.8);
+    background: white;
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.button:hover {
+    background: rgba(253, 232, 238, 0.3);
+    border-color: rgba(236, 72, 153, 0.5);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button:disabled:hover {
+    background: white;
+    border-color: rgba(253, 232, 238, 0.8);
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}
+
+.pagesContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pageButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(253, 232, 238, 0.8);
+    background: white;
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pageButton:hover {
+    background: rgba(253, 232, 238, 0.3);
+    color: #ec4899;
+}
+
+.pageButtonActive {
+    background: linear-gradient(90deg, rgba(253, 232, 238, 0.95), rgba(243, 232, 255, 0.95));
+    color: #2b2b2b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: none;
+}
+
+.pageButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.3);
+}
+
+.ellipsis {
+    padding: 0 8px;
+    color: #9ca3af;
+}
