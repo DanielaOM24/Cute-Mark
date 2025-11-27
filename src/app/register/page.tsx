@@ -4,7 +4,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useLanguage } from "@/app/context/LanguageContext";
 import Link from "next/link";
+import { authAPI } from "@/services/axios";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
@@ -12,6 +14,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const { t } = useLanguage();
     const router = useRouter();
 
     async function handleSubmit(e: React.FormEvent) {
@@ -30,15 +33,7 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
-            const response = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name, email, password }),
-            });
-
-            const data = await response.json();
+            const data = await authAPI.registro({ name, email, password });
 
             if (!data.ok) {
                 toast.error(data.error || "Error al registrar");
@@ -48,8 +43,9 @@ export default function RegisterPage() {
                     router.push("/login");
                 }, 1500);
             }
-        } catch (error) {
-            toast.error("Error al registrar usuario");
+        } catch (error: any) {
+            const errorMsg = error.response?.data?.error || error.message || "Error al registrar usuario";
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }

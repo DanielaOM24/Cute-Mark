@@ -1,0 +1,100 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "save": "Save",
+        "edit": "Edit",
+        "delete": "Delete",
+        "search": "Search",
+        "close": "Close"
+    },
+    "header": {
+        "home": "Home",
+        "products": "Products",
+        "cart": "Cart",
+        "login": "Login",
+        "logout": "Logout",
+        "register": "Register",
+        "profile": "Profile"
+    },
+    "hero": {
+        "title": "Welcome to Cute Mark",
+        "subtitle": "Find the best t-shirts with unique designs",
+        "shopNow": "Shop Now"
+    },
+    "login": {
+        "title": "Login",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "loginButton": "Login",
+        "registerLink": "Don't have an account? Register here",
+        "forgotPassword": "Forgot your password?",
+        "errors": {
+            "emailRequired": "Email is required",
+            "passwordRequired": "Password is required",
+            "invalidCredentials": "Invalid credentials",
+            "loginFailed": "Login failed"
+        }
+    },
+    "register": {
+        "title": "Create Account",
+        "name": "Name",
+        "namePlaceholder": "Enter your full name",
+        "email": "Email",
+        "emailPlaceholder": "Enter your email",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Confirm your password",
+        "registerButton": "Create Account",
+        "loginLink": "Already have an account? Login here",
+        "errors": {
+            "nameRequired": "Name is required",
+            "emailRequired": "Email is required",
+            "passwordRequired": "Password is required",
+            "passwordMismatch": "Passwords don't match",
+            "emailExists": "This email is already registered",
+            "registrationFailed": "Failed to create account"
+        }
+    },
+    "products": {
+        "title": "Our Products",
+        "noProducts": "No products available",
+        "addToCart": "Add to Cart",
+        "price": "Price",
+        "size": "Size",
+        "color": "Color",
+        "description": "Description",
+        "inStock": "In Stock",
+        "outOfStock": "Out of Stock"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty",
+        "item": "Item",
+        "quantity": "Quantity",
+        "price": "Price",
+        "total": "Total",
+        "remove": "Remove",
+        "checkout": "Checkout",
+        "continueShopping": "Continue Shopping"
+    },
+    "footer": {
+        "aboutUs": "About Us",
+        "contact": "Contact",
+        "privacy": "Privacy Policy",
+        "terms": "Terms and Conditions",
+        "followUs": "Follow Us",
+        "allRightsReserved": "All rights reserved"
+    },
+    "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page"
+    }
+}

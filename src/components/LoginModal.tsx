@@ -5,6 +5,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useLanguage } from "@/app/context/LanguageContext";
 import Modal from "./Modal";
 import Link from "next/link";
 import styles from "./LoginModal.module.css";
@@ -18,6 +19,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const { t } = useLanguage();
     const router = useRouter();
 
     async function handleSubmit(e: React.FormEvent) {
@@ -32,15 +34,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             });
 
             if (result?.error) {
-                toast.error("Email o contraseña incorrectos");
+                toast.error(t('login.errors.invalidCredentials'));
             } else {
-                toast.success("¡Bienvenido!");
+                toast.success(t('common.success'));
                 onClose();
                 router.push("/");
                 router.refresh();
             }
         } catch (error) {
-            toast.error("Error al iniciar sesión");
+            toast.error(t('login.errors.loginFailed'));
         } finally {
             setLoading(false);
         }
@@ -53,17 +55,17 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 callbackUrl: "/",
             });
         } catch (error) {
-            toast.error("Error al iniciar sesión con Google");
+            toast.error(t('login.errors.loginFailed'));
             setLoading(false);
         }
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="Iniciar Sesión">
+        <Modal isOpen={isOpen} onClose={onClose} title={t('login.title')}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.field}>
                     <label className={styles.label}>
-                        Email
+                        {t('login.email')}
                     </label>
                     <input
                         type="email"
@@ -71,13 +73,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         className={styles.input}
-                        placeholder="tu@email.com"
+                        placeholder={t('login.emailPlaceholder')}
                     />
                 </div>
 
                 <div className={styles.field}>
                     <label className={styles.label}>
-                        Contraseña
+                        {t('login.password')}
                     </label>
                     <input
                         type="password"
@@ -85,7 +87,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         className={styles.input}
-                        placeholder="••••••••"
+                        placeholder={t('login.passwordPlaceholder')}
                     />
                 </div>
 
@@ -94,7 +96,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     disabled={loading}
                     className={styles.submitBtn}
                 >
-                    {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                    {loading ? t('common.loading') : t('login.loginButton')}
                 </button>
 
                 <div className={styles.divider}>
@@ -125,17 +127,17 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                         />
                     </svg>
-                    Continuar con Google
+                    {t('login.loginButton')} Google
                 </button>
 
                 <p className={styles.footer}>
-                    ¿No tienes cuenta?{" "}
+                    {t('login.registerLink').split(' ').slice(0, -2).join(' ')}{" "}
                     <Link
                         href="/register"
                         onClick={onClose}
                         className={styles.link}
                     >
-                        Regístrate aquí
+                        {t('login.registerLink').split(' ').slice(-2).join(' ')}
                     </Link>
                 </p>
             </form>

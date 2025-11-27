@@ -26,6 +26,8 @@
     border-radius: 10px;
     margin-bottom: 10px;
     padding: 12px;
+    position: relative;
+    overflow: hidden;
 }
 
 .image {
@@ -33,6 +35,42 @@
     max-width: 100%;
     object-fit: contain;
     border-radius: 8px;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.image:hover {
+    transform: scale(1.05);
+}
+
+.imageLoading {
+    opacity: 0.3;
+}
+
+.imageLoader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #ec4899;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .body {
@@ -75,7 +113,11 @@
 .section {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+}
+
+.section:has(.palette) {
+    gap: 12px;
 }
 
 .label {
@@ -85,30 +127,54 @@
 }
 
 .palette {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 8px;
     align-items: center;
+    justify-items: center;
+    max-width: 200px;
+    padding: 6px 0;
 }
 
 .swatch {
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 2px 6px rgba(10, 10, 12, 0.03);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.06);
     cursor: pointer;
-    transition: transform .12s ease, box-shadow .12s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
+    position: relative;
+    flex-shrink: 0;
 }
 
 .swatch:hover {
-    transform: scale(1.05);
+    transform: scale(1.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15),
+        0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .swatchSelected {
-    box-shadow: 0 6px 16px rgba(16, 16, 24, 0.12);
-    transform: scale(1.12);
-    border: 2px solid rgba(30, 30, 30, 0.08);
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+}
+
+.swatchSelected::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .sizes {
@@ -162,4 +228,43 @@
     opacity: 0.55;
     cursor: not-allowed;
     transform: none;
+}
+
+/* Responsive para la paleta de colores */
+@media (max-width: 480px) {
+    .palette {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        max-width: 160px;
+        gap: 6px;
+    }
+
+    .swatch {
+        width: 20px;
+        height: 20px;
+    }
+
+    .swatchSelected::after {
+        width: 4px;
+        height: 4px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .palette {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        max-width: 180px;
+        gap: 7px;
+    }
+
+    .swatch {
+        width: 22px;
+        height: 22px;
+    }
+
+    .swatchSelected::after {
+        width: 5px;
+        height: 5px;
+    }
 }

@@ -2,9 +2,12 @@
 "use client";
 
 import Link from "next/link";
+import { useLanguage } from "@/app/context/LanguageContext";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+    const { t } = useLanguage();
+
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
@@ -32,17 +35,17 @@ export default function Footer() {
                     {/* Columna 2: Enlaces rápidos */}
                     <div>
                         <h3 className={styles.columnTitleAlt}>
-                            Quick Links
+                            {t('footer.aboutUs')}
                         </h3>
                         <nav className={styles.nav}>
                             <Link href="/" className={styles.link}>
-                                About
+                                {t('footer.aboutUs')}
                             </Link>
                             <Link href="/" className={styles.link}>
-                                Shop
+                                {t('header.products')}
                             </Link>
                             <Link href="/" className={styles.link}>
-                                Contact
+                                {t('footer.contact')}
                             </Link>
                             <Link href="/" className={styles.link}>
                                 FAQ
@@ -51,10 +54,10 @@ export default function Footer() {
                                 Shipping & Returns
                             </Link>
                             <Link href="/" className={styles.link}>
-                                Privacy Policy
+                                {t('footer.privacy')}
                             </Link>
                             <Link href="/" className={styles.link}>
-                                Terms of Service
+                                {t('footer.terms')}
                             </Link>
                         </nav>
                     </div>
@@ -62,7 +65,7 @@ export default function Footer() {
                     {/* Columna 3: Redes sociales */}
                     <div>
                         <h3 className={styles.columnTitleAlt}>
-                            Follow Us
+                            {t('footer.followUs')}
                         </h3>
                         <div className={styles.socialContainer}>
                             <a
@@ -99,7 +102,7 @@ export default function Footer() {
                 {/* Copyright */}
                 <div className={styles.copyright}>
                     <p className={styles.copyrightText}>
-                        © {new Date().getFullYear()} Cute Mark. All rights reserved.
+                        © {new Date().getFullYear()} Cute Mark. {t('footer.allRightsReserved')}.
                     </p>
                 </div>
             </div>

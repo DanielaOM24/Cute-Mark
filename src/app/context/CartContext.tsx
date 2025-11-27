@@ -2,12 +2,13 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { cartService, CartItem as ServiceCartItem } from "@/services/cartService";
+import { toast } from "react-toastify";
 
 /** Tipos */
 export type CartItem = {
     id: string; // unique key: productId + color + size (generado aqui)
-    _id?: string; // id mongo
-    productId?: number;
+    productId: string;
     name: string;
     price: number;
     color?: string;
@@ -18,89 +19,168 @@ export type CartItem = {
 
 type CartContextValue = {
     items: CartItem[];
-    addItem: (item: Omit<CartItem, "id" | "qty"> & { qty?: number }) => void;
-    removeItem: (id: string) => void;
-    updateQty: (id: string, qty: number) => void;
-    clearCart: () => void;
+    loading: boolean;
+    addItem: (item: Omit<CartItem, "id" | "qty"> & { qty?: number }) => Promise<void>;
+    removeItem: (id: string) => Promise<void>;
+    updateQty: (id: string, qty: number) => Promise<void>;
+    clearCart: () => Promise<void>;
     getTotalItems: () => number;
     getTotalPrice: () => number;
+    refreshCart: () => Promise<void>;
 };
 
 /** Context */
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
 /** Helper: unique key generator por producto+color+size */
-function makeKey(productId?: number, color?: string, size?: string) {
-    return `${productId ?? "noid"}::${color ?? "noc"}::${size ?? "nos"}`;
+function makeKey(productId: string, color?: string, size?: string) {
+    return `${productId}::${color ?? "noc"}::${size ?? "nos"}`;
+}
+
+/** Helper: convertir ServiceCartItem a CartItem */
+function serviceItemToCartItem(item: ServiceCartItem): CartItem {
+    return {
+        id: makeKey(item.productId, item.color, item.size),
+        productId: item.productId,
+        name: item.name,
+        price: item.price,
+        color: item.color,
+        size: item.size,
+        qty: item.qty,
+        image: item.image,
+    };
 }
 
 /** Provider */
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [items, setItems] = useState<CartItem[]>([]);
+    const [loading, setLoading] = useState(false);
 
-    // cargar carrito desde localStorage al montar
+    // Cargar carrito desde el servidor al montar
     useEffect(() => {
-        try {
-            const raw = typeof window !== "undefined" ? localStorage.getItem("cart") : null;
-            if (raw) {
-                setItems(JSON.parse(raw));
-            }
-        } catch (e) {
-            console.error("Error loading cart from localStorage", e);
-        }
+        refreshCart();
     }, []);
 
-    // persistir cada vez que items cambian
-    useEffect(() => {
+    // Función para refrescar el carrito desde el servidor
+    const refreshCart = async () => {
+        setLoading(true);
         try {
-            localStorage.setItem("cart", JSON.stringify(items));
-        } catch (e) {
-            console.error("Error saving cart to localStorage", e);
-        }
-    }, [items]);
-
-    function addItem(payload: Omit<CartItem, "id" | "qty"> & { qty?: number }) {
-        const qty = payload.qty ?? 1;
-        const key = makeKey(payload.productId, payload.color, payload.size);
-        setItems((prev) => {
-            const foundIndex = prev.findIndex((it) => it.id === key);
-            if (foundIndex > -1) {
-                // sumar cantidad
-                const copy = [...prev];
-                copy[foundIndex] = { ...copy[foundIndex], qty: copy[foundIndex].qty + qty };
-                return copy;
+            const response = await cartService.getCart();
+            if (response.success && response.cart) {
+                const cartItems = response.cart.items.map(serviceItemToCartItem);
+                setItems(cartItems);
             }
-            // nuevo item
-            const newItem: CartItem = {
-                id: key,
-                _id: payload._id,
+        } catch (error) {
+            console.error("Error loading cart:", error);
+            toast.error("Error al cargar el carrito");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const addItem = async (payload: Omit<CartItem, "id" | "qty"> & { qty?: number }) => {
+        setLoading(true);
+        try {
+            const response = await cartService.addItem({
                 productId: payload.productId,
                 name: payload.name,
                 price: payload.price,
                 color: payload.color,
                 size: payload.size,
-                qty,
+                qty: payload.qty ?? 1,
                 image: payload.image,
-            };
-            return [...prev, newItem];
-        });
-    }
+            });
 
-    function removeItem(id: string) {
-        setItems((prev) => prev.filter((it) => it.id !== id));
-    }
-
-    function updateQty(id: string, qty: number) {
-        if (qty <= 0) {
-            removeItem(id);
-            return;
+            if (response.success && response.cart) {
+                const cartItems = response.cart.items.map(serviceItemToCartItem);
+                setItems(cartItems);
+                toast.success(response.message || "Producto agregado al carrito");
+            } else {
+                toast.error(response.error || "Error al agregar al carrito");
+            }
+        } catch (error) {
+            console.error("Error adding item:", error);
+            toast.error("Error al agregar al carrito");
+        } finally {
+            setLoading(false);
         }
-        setItems((prev) => prev.map((it) => (it.id === id ? { ...it, qty } : it)));
-    }
+    };
 
-    function clearCart() {
-        setItems([]);
-    }
+    const removeItem = async (id: string) => {
+        const item = items.find(it => it.id === id);
+        if (!item) return;
+
+        setLoading(true);
+        try {
+            const response = await cartService.removeItem(
+                item.productId,
+                item.color,
+                item.size
+            );
+
+            if (response.success && response.cart) {
+                const cartItems = response.cart.items.map(serviceItemToCartItem);
+                setItems(cartItems);
+                toast.success(response.message || "Producto eliminado del carrito");
+            } else {
+                toast.error(response.error || "Error al eliminar del carrito");
+            }
+        } catch (error) {
+            console.error("Error removing item:", error);
+            toast.error("Error al eliminar del carrito");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const updateQty = async (id: string, qty: number) => {
+        const item = items.find(it => it.id === id);
+        if (!item) return;
+
+        setLoading(true);
+        try {
+            const response = await cartService.updateItemQuantity(
+                item.productId,
+                qty,
+                item.color,
+                item.size
+            );
+
+            if (response.success && response.cart) {
+                const cartItems = response.cart.items.map(serviceItemToCartItem);
+                setItems(cartItems);
+                if (qty <= 0) {
+                    toast.success("Producto eliminado del carrito");
+                }
+            } else {
+                toast.error(response.error || "Error al actualizar cantidad");
+            }
+        } catch (error) {
+            console.error("Error updating quantity:", error);
+            toast.error("Error al actualizar cantidad");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const clearCart = async () => {
+        setLoading(true);
+        try {
+            const response = await cartService.clearCart();
+
+            if (response.success) {
+                setItems([]);
+                toast.success(response.message || "Carrito vaciado");
+            } else {
+                toast.error(response.error || "Error al vaciar carrito");
+            }
+        } catch (error) {
+            console.error("Error clearing cart:", error);
+            toast.error("Error al vaciar carrito");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     function getTotalItems() {
         return items.reduce((s, it) => s + it.qty, 0);
@@ -112,12 +192,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const value: CartContextValue = {
         items,
+        loading,
         addItem,
         removeItem,
         updateQty,
         clearCart,
         getTotalItems,
         getTotalPrice,
+        refreshCart,
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

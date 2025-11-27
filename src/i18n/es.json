@@ -1,0 +1,100 @@
+{
+    "common": {
+        "loading": "Cargando...",
+        "error": "Error",
+        "success": "Éxito",
+        "cancel": "Cancelar",
+        "confirm": "Confirmar",
+        "save": "Guardar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "search": "Buscar",
+        "close": "Cerrar"
+    },
+    "header": {
+        "home": "Inicio",
+        "products": "Productos",
+        "cart": "Carrito",
+        "login": "Iniciar Sesión",
+        "logout": "Cerrar Sesión",
+        "register": "Registrarse",
+        "profile": "Perfil"
+    },
+    "hero": {
+        "title": "Bienvenido a Cute Mark",
+        "subtitle": "Encuentra las mejores camisetas con diseños únicos",
+        "shopNow": "Comprar Ahora"
+    },
+    "login": {
+        "title": "Iniciar Sesión",
+        "email": "Email",
+        "emailPlaceholder": "Ingrese su email",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "loginButton": "Iniciar Sesión",
+        "registerLink": "¿No tienes cuenta? Regístrate aquí",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "errors": {
+            "emailRequired": "El email es requerido",
+            "passwordRequired": "La contraseña es requerida",
+            "invalidCredentials": "Credenciales inválidas",
+            "loginFailed": "Error al iniciar sesión"
+        }
+    },
+    "register": {
+        "title": "Crear Cuenta",
+        "name": "Nombre",
+        "namePlaceholder": "Ingrese su nombre completo",
+        "email": "Email",
+        "emailPlaceholder": "Ingrese su email",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Ingrese su contraseña",
+        "confirmPassword": "Confirmar Contraseña",
+        "confirmPasswordPlaceholder": "Confirme su contraseña",
+        "registerButton": "Crear Cuenta",
+        "loginLink": "¿Ya tienes cuenta? Inicia sesión aquí",
+        "errors": {
+            "nameRequired": "El nombre es requerido",
+            "emailRequired": "El email es requerido",
+            "passwordRequired": "La contraseña es requerida",
+            "passwordMismatch": "Las contraseñas no coinciden",
+            "emailExists": "Este email ya está registrado",
+            "registrationFailed": "Error al crear la cuenta"
+        }
+    },
+    "products": {
+        "title": "Nuestros Productos",
+        "noProducts": "No hay productos disponibles",
+        "addToCart": "Agregar al Carrito",
+        "price": "Precio",
+        "size": "Talla",
+        "color": "Color",
+        "description": "Descripción",
+        "inStock": "En Stock",
+        "outOfStock": "Agotado"
+    },
+    "cart": {
+        "title": "Carrito de Compras",
+        "empty": "Tu carrito está vacío",
+        "item": "Artículo",
+        "quantity": "Cantidad",
+        "price": "Precio",
+        "total": "Total",
+        "remove": "Eliminar",
+        "checkout": "Proceder al Pago",
+        "continueShopping": "Seguir Comprando"
+    },
+    "footer": {
+        "aboutUs": "Acerca de Nosotros",
+        "contact": "Contacto",
+        "privacy": "Política de Privacidad",
+        "terms": "Términos y Condiciones",
+        "followUs": "Síguenos",
+        "allRightsReserved": "Todos los derechos reservados"
+    },
+    "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "page": "Página"
+    }
+}

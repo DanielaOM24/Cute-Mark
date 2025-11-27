@@ -7,6 +7,7 @@ const apiClient = axios.create({
     headers: {
         "Content-Type": "application/json",
     },
+    timeout: 10000, // 10 segundos de timeout
 });
 
 // Interceptor para agregar tokens si es necesario
@@ -36,6 +37,28 @@ apiClient.interceptors.response.use(
         }
     }
 );
+
+// Funciones helper para APIs comunes
+export const emailAPI = {
+    enviar: async (datos: any) => {
+        const response = await apiClient.post("/api/send-email", datos);
+        return response.data;
+    }
+};
+
+export const authAPI = {
+    registro: async (datos: any) => {
+        const response = await apiClient.post("/api/register", datos);
+        return response.data;
+    }
+};
+
+export const validacionAPI = {
+    probar: async (datos: any) => {
+        const response = await apiClient.post("/api/test-validacion", datos);
+        return response.data;
+    }
+};
 
 export default apiClient;
 

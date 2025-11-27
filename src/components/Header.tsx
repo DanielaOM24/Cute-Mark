@@ -4,15 +4,18 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useCart } from "@/app/context/CartContext";
+import { useLanguage } from "@/app/context/LanguageContext";
 import { useState } from "react";
 import IconButton from "./IconButton";
 import LoginModal from "./LoginModal";
 import HamburgerMenu from "./HamburgerMenu";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import styles from "./Header.module.css";
 
 export default function Header() {
     const { data: session } = useSession();
     const { getTotalItems } = useCart();
+    const { t } = useLanguage();
     const totalItems = getTotalItems();
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -27,6 +30,9 @@ export default function Header() {
 
                     {/* Navegación derecha */}
                     <div className={styles.navRight}>
+                        {/* Selector de idioma */}
+                        <LanguageSwitcher />
+
                         {/* Carrito */}
                         <Link href="/cart" style={{ textDecoration: "none" }}>
                             <IconButton
@@ -36,7 +42,7 @@ export default function Header() {
                                     </svg>
                                 }
                                 badge={totalItems}
-                                ariaLabel="Carrito de compras"
+                                ariaLabel={t('header.cart')}
                             />
                         </Link>
 
@@ -44,13 +50,13 @@ export default function Header() {
                         {session ? (
                             <div className={styles.userSection}>
                                 <Link href="/profile" className={styles.userLink}>
-                                    {session.user?.name || "Usuario"}
+                                    {session.user?.name || t('header.profile')}
                                 </Link>
                                 <button
                                     onClick={() => signOut({ callbackUrl: "/" })}
                                     className={styles.logoutBtn}
                                 >
-                                    Salir
+                                    {t('header.logout')}
                                 </button>
                             </div>
                         ) : (
@@ -61,7 +67,7 @@ export default function Header() {
                                     </svg>
                                 }
                                 onClick={() => setIsLoginModalOpen(true)}
-                                ariaLabel="Iniciar sesión"
+                                ariaLabel={t('header.login')}
                             />
                         )}
 

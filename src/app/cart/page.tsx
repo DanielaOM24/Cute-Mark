@@ -6,25 +6,38 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 
 export default function CartPage() {
-    const { items, removeItem, updateQty, clearCart, getTotalPrice } = useCart();
+    const { items, loading, removeItem, updateQty, clearCart, getTotalPrice } = useCart();
     const total = getTotalPrice();
 
-    function handleRemove(id: string) {
-        removeItem(id);
-        toast.success("Producto eliminado del carrito");
+    async function handleRemove(id: string) {
+        await removeItem(id);
     }
 
-    function handleUpdateQty(id: string, newQty: number) {
-        if (newQty <= 0) {
-            handleRemove(id);
-        } else {
-            updateQty(id, newQty);
-        }
+    async function handleUpdateQty(id: string, newQty: number) {
+        await updateQty(id, newQty);
     }
 
-    function handleClearCart() {
-        clearCart();
-        toast.success("Carrito vaciado");
+    async function handleClearCart() {
+        await clearCart();
+    }
+
+    // Mostrar loading mientras se carga el carrito
+    if (loading && items.length === 0) {
+        return (
+            <main style={{ padding: "40px 20px", maxWidth: "1200px", margin: "0 auto" }}>
+                <div style={{
+                    textAlign: "center",
+                    padding: "60px 20px",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    borderRadius: "20px",
+                    boxShadow: "0 6px 18px rgba(20, 20, 30, 0.04)",
+                }}>
+                    <p style={{ fontSize: "18px", color: "#6b7280", marginBottom: "24px" }}>
+                        Cargando carrito...
+                    </p>
+                </div>
+            </main>
+        );
     }
 
     if (items.length === 0) {
@@ -68,6 +81,7 @@ export default function CartPage() {
                 </h1>
                 <button
                     onClick={handleClearCart}
+                    disabled={loading}
                     style={{
                         padding: "8px 16px",
                         borderRadius: "8px",
@@ -76,10 +90,11 @@ export default function CartPage() {
                         color: "#3b2150",
                         fontWeight: "600",
                         fontSize: "14px",
-                        cursor: "pointer",
+                        cursor: loading ? "not-allowed" : "pointer",
+                        opacity: loading ? 0.6 : 1,
                     }}
                 >
-                    Vaciar Carrito
+                    {loading ? "Vaciando..." : "Vaciar Carrito"}
                 </button>
             </div>
 
@@ -125,14 +140,16 @@ export default function CartPage() {
                         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                             <button
                                 onClick={() => handleUpdateQty(item.id, item.qty - 1)}
+                                disabled={loading}
                                 style={{
                                     width: "32px",
                                     height: "32px",
                                     borderRadius: "6px",
                                     border: "1px solid rgba(200, 200, 210, 0.6)",
                                     background: "transparent",
-                                    cursor: "pointer",
+                                    cursor: loading ? "not-allowed" : "pointer",
                                     fontSize: "18px",
+                                    opacity: loading ? 0.6 : 1,
                                 }}
                             >
                                 -
@@ -142,20 +159,23 @@ export default function CartPage() {
                             </span>
                             <button
                                 onClick={() => handleUpdateQty(item.id, item.qty + 1)}
+                                disabled={loading}
                                 style={{
                                     width: "32px",
                                     height: "32px",
                                     borderRadius: "6px",
                                     border: "1px solid rgba(200, 200, 210, 0.6)",
                                     background: "transparent",
-                                    cursor: "pointer",
+                                    cursor: loading ? "not-allowed" : "pointer",
                                     fontSize: "18px",
+                                    opacity: loading ? 0.6 : 1,
                                 }}
                             >
                                 +
                             </button>
                             <button
                                 onClick={() => handleRemove(item.id)}
+                                disabled={loading}
                                 style={{
                                     padding: "8px 16px",
                                     borderRadius: "8px",
@@ -164,11 +184,12 @@ export default function CartPage() {
                                     color: "#dc2626",
                                     fontWeight: "600",
                                     fontSize: "14px",
-                                    cursor: "pointer",
+                                    cursor: loading ? "not-allowed" : "pointer",
                                     marginLeft: "12px",
+                                    opacity: loading ? 0.6 : 1,
                                 }}
                             >
-                                Eliminar
+                                {loading ? "..." : "Eliminar"}
                             </button>
                         </div>
                     </div>

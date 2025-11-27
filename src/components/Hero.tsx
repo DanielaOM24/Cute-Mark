@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLanguage } from "@/app/context/LanguageContext";
 import styles from "./Hero.module.css";
 
 type HeroProps = {
@@ -9,6 +10,8 @@ type HeroProps = {
 };
 
 export default function Hero({ imageUrl = "/hero-boutique.jpg" }: HeroProps) {
+    const { t } = useLanguage();
+
     return (
         <section
             className={styles.section}
@@ -21,17 +24,17 @@ export default function Hero({ imageUrl = "/hero-boutique.jpg" }: HeroProps) {
                 <div className={styles.content}>
                     {/* Título principal - estilo serif elegante */}
                     <h1 className={styles.title}>
-                        autenticidad y belleza
+                        {t('hero.title')}
                     </h1>
 
                     {/* Subtítulo */}
                     <p className={styles.subtitle}>
-                        Diseños únicos para mujeres únicas.
+                        {t('hero.subtitle')}
                     </p>
 
                     {/* CTA Button */}
                     <Link href="/#products" className={styles.ctaButton}>
-                        Compra ahora
+                        {t('hero.shopNow')}
                     </Link>
                 </div>
             </div>
